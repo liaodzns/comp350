@@ -9,6 +9,8 @@ function a3_test()
     % Construct the exact solution vector
     x_exact = ones(n, 1);
 
+    d(1) = 10^(-15);  % Change d1 to 10^(-15)
+    a(1) = 10^(-8);
     % Construct vector b
     b = zeros(n, 1);
     for i = 1:n
@@ -60,77 +62,75 @@ function A = construct_matrix(d, a, n)
         A(n+1-i,i) = a(i);  % off-diagonal elements
     end
 end
-
 ```
 
 ```
->> a3_test  FOR Q3B
-Condition number of A: 3.606948e+02
+>> a3_test  FOR Q3D
 Diagonal elements d:
-    0.5108
-   -0.6563
-   -0.1250
-   -0.5305
-    0.1056
-    1.1284
-    0.7425
-    1.1436
-   -0.9147
-    0.1798
-   -0.9833
-    0.3848
-    0.3257
-    1.2963
-    1.0992
-    0.6532
-   -0.5051
-   -0.4760
-   -2.0516
+    0.0000
+    2.1920
+    1.5357
+    0.9073
+    0.4023
+   -0.5384
+   -0.1152
+    1.8220
+   -2.0215
+   -0.6370
+   -0.1888
+    0.1483
+   -1.7839
+    0.5291
+    0.7297
+   -0.9401
+   -0.2593
+   -1.2135
+    1.6245
 
 Off-diagonal elements a:
-   -0.4483
-   -1.5512
-    0.9298
-    0.9019
-    0.1383
-   -0.3784
-    0.1431
-    1.6050
-    1.3491
-    0.1798
-    0.1684
-   -1.1205
-    0.4007
-    0.7391
-    0.9000
-   -1.5312
-    0.5046
-   -0.8642
-   -0.3766
+    0.0000
+   -0.2509
+   -0.9255
+    0.0987
+    1.6843
+    0.2753
+    0.3533
+   -1.2004
+    0.1661
+   -0.6370
+   -1.3814
+    1.1283
+    2.4654
+   -1.5579
+   -2.0666
+   -0.0726
+    0.7591
+   -0.0817
+   -0.1585
 
 Right-hand side vector b:
-    0.1343
-   -1.5205
-    0.3796
-   -2.0617
-    1.0056
-    1.8674
-    1.1432
-    0.0231
-   -0.7463
-    0.1798
-    0.3658
-    1.9899
-    0.4688
-    0.9179
-    1.2375
-    1.5552
-    0.4248
-   -2.0272
-   -2.4999
+   -0.1585
+    2.1103
+    2.2948
+    0.8347
+   -1.6644
+   -2.0963
+    2.3502
+    2.9503
+   -3.4029
+   -0.6370
+   -0.0227
+   -1.0521
+   -1.4306
+    0.8043
+    2.4140
+   -0.8415
+   -1.1847
+   -1.4644
+    1.6245
 
-Q3B
-genp output: 1.000000e+00
+FOR Q3D
+genp output: 9.992007e-01
 genp output: 1.000000e+00
 genp output: 1.000000e+00
 genp output: 1.000000e+00
@@ -168,13 +168,14 @@ gepp output: 1.000000e+00
 gepp output: 1.000000e+00
 gepp output: 1.000000e+00
 gepp output: 1.000000e+00
-Relative error for GENP: 5.392603e-15
-Relative error for GEPP: 3.386875e-15
-Error bound (epsilon * cond(A)): 8.009033e-14
+Relative error for GENP: 1.833669e-04
+Relative error for GEPP: 1.394267e-09
+Error bound (epsilon * cond(A)): 6.993755e-07
 ```
 
-FOR Q3B
-The fact that the relative error for both GENP and GEPP is very close to machine epsilon indicates that the matrix is well-conditioned and the solutions are accurate to within the machine precision.
+FOR Q3D
+In this example, d(1) is still very small, but we have also made a(1) small. I notice that the error bound is much larger than in other iterations of this question, meaning that the matrix is much more ill-conditioned.
 
-Since GEPP and GENP produce the same results (the numbers are so close that they are rounded to 1), we are sure that their function implementations are correct. 
-However, we can see that the relative error for GENP is slightly larger than that for GEPP. This is because GEPP uses partial pivoting to ensure numerical stability, which can sometimes lead to a slightly smaller relative error for the solution. Since both relative erorrs are smaller than the error bound, we can conclude that both methods performed well for this particular matrix.
+The relative error for GENP is still larger than the error bound, which means that the error is not due to the round-off error (epsilon). Instead, it is due to the large relative error between the exact solution and the computed solution.
+
+Since the relative error for GEPP is much smaller than the error bound, we can conclude that GEPP is more accurate than GENP at performing computations on this matrix.
